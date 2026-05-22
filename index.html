@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ashna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Welcome Overlay to handle autoplay policy -->
+    <div id="welcome-overlay" class="welcome-overlay">
+        <div class="welcome-content">
+            <h2 class="welcome-title">For Ashna 💖</h2>
+            <p class="welcome-subtitle">Tap to open...</p>
+        </div>
+    </div>
+    <!-- Audio element for background music -->
+    <audio id="bg-music" loop>
+        <source src="music/Ashna Birthday (1).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- UI Controls -->
+    <button id="music-toggle" class="glass-btn">
+        <span class="icon">🎵</span> Play Music
+    </button>
+
+    <!-- Ambient background layers -->
+    <div id="stars-container"></div>
+    <div id="petals-container"></div>
+    <div id="cursor-trail-container"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero fade-in-section">
+            <div class="hero-content">
+                <div class="quote-container">
+                    <p id="hero-quote" class="typing-text"></p>
+                </div>
+                <h1 id="hero-name" class="glowing-name hidden">Happy Birthday Ashna</h1>
+            </div>
+            <div class="scroll-indicator">
+                <p>Scroll to explore</p>
+                <div class="arrow">↓</div>
+            </div>
+        </section>
+
+        <!-- Scrapbook Section -->
+        <section id="scrapbook" class="scrapbook fade-in-section">
+            <div class="section-title">
+                <h2>This is only I have</h2>
+                <p>Tap to flip the photos💖</p>
+            </div>
+            <div class="gallery">
+                <!-- Polaroid 1 -->
+                <div class="polaroid-wrapper floating-item" style="--delay: 0s;">
+                    <div class="glow-bg"></div>
+                    <div class="polaroid flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="image-container">
+                                    <img src="photos/marrage.png" alt="Memory 1">
+                                </div>
+                                <div class="caption">In My Heart</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>You make every moment feel like magic.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid-wrapper floating-item" style="--delay: 1.5s;">
+                    <div class="glow-bg"></div>
+                    <div class="polaroid flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="image-container">
+                                    <img src="photos/pq.png" alt="Memory 2">
+                                </div>
+                                <div class="caption">The killig silence</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Now, I have also this color dress.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid-wrapper floating-item" style="--delay: 0.7s;">
+                    <div class="glow-bg"></div>
+                    <div class="polaroid flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="image-container">
+                                    <img src="photos/red.png" alt="Memory 3">
+                                </div>
+                                <div class="caption">Beautifull eyes</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>I cherish everything about you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 4 -->
+                <div class="polaroid-wrapper floating-item" style="--delay: 2.2s;">
+                    <div class="glow-bg"></div>
+                    <div class="polaroid flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="image-container">
+                                    <img src="photos/sorry.jpg" alt="Memory 4">
+                                </div>
+                                <div class="caption">I don't know where it comes</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Your beauty shines from within.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wish Section -->
+        <section id="wish" class="wish fade-in-section">
+            <div class="wish-content glass-panel">
+                <h2 class="wish-heading">Wish From a Poor Soul</h2>
+                <div class="wish-text">
+                    <p>നിൻ്റെ ജീവിതത്തിൽ നീ ആദ്യമായി കണ്ണുനീർ ഒയുക്കിയ ദിവസം,</p>
+                    <p>ഇനി ഒരിക്കലും നീ വേദനിക്കരുതെന്ന് ഞാൻ ആഗ്രഹിക്കുന്നു 🫠,</p>
+                    <p>പക്ഷേ ഞാൻ നിൻ്റെ അടുത്ത് ഇല്ലല്ലോ, Don't worry ഞാൻ ഒരു നിയലായി നിൻ്റെ കൂടെ കാണും.</p>
+                    <br>
+                    <p class="english-text">Keep a smile everyday. Your smile is Beautiful 😍.</p>
+                    <h3 class="wish-finale">Happy Birthday</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ending Section -->
+        <section id="ending" class="ending fade-in-section">
+            <div class="ending-content glass-panel">
+                <p class="ending-quote">“This website may stay online, longer than we did.<br>But that’s okay.”</p>
+                <h2 class="ending-greeting">Happy Birthday My Love❤️</h2>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
