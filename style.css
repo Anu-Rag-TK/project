@@ -40,10 +40,14 @@ body {
     background: var(--bg-dark);
     z-index: 10000;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: opacity 1s ease, visibility 1s ease;
+    cursor: crosshair;
+    user-select: none;
+    touch-action: none;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+    overflow: hidden;
 }
 
 .welcome-overlay.hidden {
@@ -52,9 +56,20 @@ body {
     pointer-events: none;
 }
 
+#swipe-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10005;
+    pointer-events: none;
+}
+
 .welcome-content {
     text-align: center;
-    animation: pulse 2s infinite;
+    z-index: 10002;
+    pointer-events: none;
 }
 
 .welcome-title {
@@ -62,19 +77,287 @@ body {
     font-size: 5rem;
     color: var(--primary-pink);
     text-shadow: 0 0 20px var(--glow-pink);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    animation: gentle-glow 3s ease-in-out infinite alternate;
 }
 
 .welcome-subtitle {
     font-size: 1.5rem;
     color: var(--text-muted);
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); opacity: 0.8; }
+/* Cake styling — 3D with CSS perspective */
+.cake-container {
+    position: relative;
+    width: 260px;
+    height: 240px;
+    margin: 30px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    perspective: 600px;
+}
+
+.cake-halves {
+    position: relative;
+    width: 180px;
+    height: 130px;
+    z-index: 2;
+    transform-style: preserve-3d;
+    transform: rotateX(18deg);
+}
+
+.cake-half {
+    position: absolute;
+    bottom: 0;
+    width: 90px;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-style: preserve-3d;
+}
+
+.cake-half.left {
+    left: 0;
+    transform-origin: bottom right;
+}
+
+.cake-half.right {
+    right: 0;
+    transform-origin: bottom left;
+}
+
+.cake-half.left .cake-body {
+    left: 0;
+}
+
+.cake-half.right .cake-body {
+    right: 0;
+}
+
+.cake-body {
+    position: absolute;
+    bottom: 0;
+    width: 180px;
+    height: 130px;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.3));
+}
+
+.cake-layer {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+}
+
+/* Top face for each layer (the visible top surface in 3D) */
+.cake-layer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    transform: translateZ(1px);
+}
+
+.layer-top {
+    background: linear-gradient(180deg, #ff9bb8 0%, #e0627f 100%);
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.layer-top::after {
+    background: linear-gradient(180deg, #ffb3cb 0%, #ff85a2 100%);
+    border-radius: 8px 8px 0 0;
+}
+
+.layer-middle {
+    background: linear-gradient(180deg, #fff5f8 0%, #f0d4de 100%);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5), inset 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.layer-middle::after {
+    background: linear-gradient(180deg, #ffffff 0%, #fff0f5 100%);
+}
+
+.layer-bottom {
+    background: linear-gradient(180deg, #a855db 0%, #7a2fba 100%);
+    border-radius: 0 0 8px 8px;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), inset 0 -4px 10px rgba(0, 0, 0, 0.35),
+                0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.layer-bottom::after {
+    background: linear-gradient(180deg, #b86ce0 0%, #9d4edd 100%);
+    border-radius: 0 0 8px 8px;
+}
+
+/* Frosting dripping effect */
+.frosting {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5eef0 100%);
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    transform-style: preserve-3d;
+}
+
+/* Frosting top surface — the 3D cap */
+.frosting::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: 14px;
+    background: radial-gradient(ellipse at center, #ffffff 60%, #f0e5ea 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    z-index: 4;
+}
+
+.frosting::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 100%;
+    height: 14px;
+    background: radial-gradient(circle at 15px 0, #ffffff 12px, transparent 13px),
+                radial-gradient(circle at 45px 0, #ffffff 12px, transparent 13px),
+                radial-gradient(circle at 75px 0, #ffffff 12px, transparent 13px),
+                radial-gradient(circle at 105px 0, #ffffff 12px, transparent 13px),
+                radial-gradient(circle at 135px 0, #ffffff 12px, transparent 13px),
+                radial-gradient(circle at 165px 0, #ffffff 12px, transparent 13px);
+    background-size: 30px 20px;
+}
+
+/* Sprinkles on top */
+.sprinkles {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    z-index: 5;
+}
+
+.sprinkle {
+    position: absolute;
+    width: 7px;
+    height: 3px;
+    border-radius: 2px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.sprinkle.p1 { top: 4px; left: 20px; background: #ff4081; transform: rotate(15deg); }
+.sprinkle.p2 { top: 6px; left: 40px; background: #ffeb3b; transform: rotate(-30deg); }
+.sprinkle.p3 { top: 3px; left: 65px; background: #00e5ff; transform: rotate(45deg); }
+.sprinkle.p4 { top: 8px; left: 80px; background: #e040fb; transform: rotate(-15deg); }
+.sprinkle.p5 { top: 5px; left: 100px; background: #ff4081; transform: rotate(25deg); }
+.sprinkle.p6 { top: 7px; left: 120px; background: #ffeb3b; transform: rotate(-45deg); }
+.sprinkle.p7 { top: 4px; left: 145px; background: #00e5ff; transform: rotate(10deg); }
+.sprinkle.p8 { top: 9px; left: 160px; background: #e040fb; transform: rotate(-20deg); }
+
+/* Candle styling */
+.candle-container {
+    position: absolute;
+    top: 75px;
+    left: calc(50% - 6px);
+    width: 12px;
+    height: 55px;
+    z-index: 6;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform-style: preserve-3d;
+}
+
+.candle {
+    width: 10px;
+    height: 38px;
+    background: linear-gradient(135deg, #ffacd0, #c77dff, #ff7eb3);
+    border-radius: 4px 4px 2px 2px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25), inset -1px 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.flame {
+    position: absolute;
+    top: -16px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 18px;
+    background: radial-gradient(ellipse at 50% 70%, #fff8b5 10%, #ffe066 30%, #ff7043 70%, transparent 100%);
+    border-radius: 50% 50% 20% 20%;
+    animation: flicker 0.15s ease-in-out infinite alternate;
+    box-shadow: 0 0 12px #ffe066, 0 0 24px #ff7043, 0 -4px 16px rgba(255, 224, 102, 0.5);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Plate styling — 3D ellipse */
+.cake-plate {
+    position: absolute;
+    bottom: 2px;
+    left: calc(50% - 115px);
+    width: 230px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 10px 30px rgba(157, 78, 221, 0.15),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    z-index: 1;
+    transform: rotateX(18deg);
+}
+
+/* Swipe-to-cut state trigger classes */
+.cake-container.cut .cake-half.left {
+    transform: translateX(-45px) rotate(-8deg);
+}
+
+.cake-container.cut .cake-half.right {
+    transform: translateX(45px) rotate(8deg);
+}
+
+.cake-container.cut .candle-container {
+    opacity: 0;
+    transform: translateY(25px) scale(0.5);
+}
+
+/* Welcome bottom quote styling */
+.welcome-quote {
+    margin-top: 30px;
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    color: var(--text-muted);
+    opacity: 0.75;
+    text-shadow: 0 0 12px var(--glow-pink);
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 10002;
+    animation: gentle-glow 3s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes flicker {
+    0% { transform: scale(1) rotate(-1deg); }
+    100% { transform: scale(1.15) rotate(2deg); }
+}
+
+@keyframes gentle-glow {
+    0% { text-shadow: 0 0 10px rgba(255, 126, 179, 0.4); opacity: 0.65; }
+    100% { text-shadow: 0 0 20px var(--glow-pink); opacity: 0.85; }
 }
 
 /* UI Controls */
@@ -519,6 +802,10 @@ main {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .welcome-title { font-size: 3.2rem; }
+    .welcome-subtitle { font-size: 1.1rem; }
+    .welcome-quote { font-size: 2.2rem; }
+    .cake-container { transform: scale(0.85); margin-top: 20px; }
     .glowing-name { font-size: 5rem; }
     .typing-text { font-size: 1.2rem; }
     .section-title h2 { font-size: 3rem; }
