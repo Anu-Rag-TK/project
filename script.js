@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (charIndex < quoteText.length) {
             quoteElement.textContent += quoteText.charAt(charIndex);
             charIndex++;
-            setTimeout(typeQuote, 50); // Slower typing speed
+            setTimeout(typeQuote, 70); // Slower typing speed
         } else {
             // Typing finished, remove cursor and reveal name
             quoteElement.style.borderRight = "none";
