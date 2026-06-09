@@ -235,13 +235,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (charIndex < quoteText.length) {
             quoteElement.textContent += quoteText.charAt(charIndex);
             charIndex++;
-            setTimeout(typeQuote, 120); // Slower typing speed
+            setTimeout(typeQuote, 50); // Slower typing speed
         } else {
             // Typing finished, remove cursor and reveal name
             quoteElement.style.borderRight = "none";
             setTimeout(() => {
                 nameElement.classList.remove('hidden');
-            }, 500);
+            }, 300);
         }
     }
 
