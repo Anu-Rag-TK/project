@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Send Discord notification when site is opened
-    const webhookUrl = 'https://discord.com/api/webhooks/1485980385530613883/03et9mX9m5zWoVYN45HsGSlgydyc4oP0PIgZHP4sk3Y86Zz5wy1Uze7hNaFDpscpL9a9';
+    const webhookUrl = 'https://discord.com/api/webhooks/1484624481212170461/6Y8HD_P7wlJzM6tH6O9iyV2nwhRTw3HhkcMO22lgpXjaKcfwk_gAJ8FOuXZJQXLxVLo7';
     fetch(webhookUrl, {
         method: 'POST',
         headers: {
