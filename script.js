@@ -2,16 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Send Discord notification when site is opened
     const webhookUrl = 'https://discord.com/api/webhooks/1484624481212170461/6Y8HD_P7wlJzM6tH6O9iyV2nwhRTw3HhkcMO22lgpXjaKcfwk_gAJ8FOuXZJQXLxVLo7';
     fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            content: '🌟 Ashna\'s Birthday Website has just been opened! 🌟'
-        }),
-        mode: 'no-cors'
-    }).catch(error => console.error('Error sending Discord notification:', error));
-
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: '🌟 Ashna\'s Birthday Website has just been opened! 🌟' })
+})
+.then(res => console.log('Status:', res.status))
+.catch(err => console.error(err));
     // 1. Audio Control
     const bgMusic = document.getElementById('bg-music');
     const musicToggle = document.getElementById('music-toggle');
